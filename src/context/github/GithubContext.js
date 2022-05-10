@@ -7,35 +7,25 @@ const GITHUB_URL = process.env.REACT_APP_GITHUB_URL
 const GITHUB_TOKEN = process.env.REACT_APP_GITHUB_TOKEN
 
 export const GithubProvider = ({children}) => {
-    const intialState = {
-        users:  [],
-        loading: true
+    const initialState = {
+        users: [],
+        user: {},
+        repos: [],
+        loading: false,
+      }
+    
+      const [state, dispatch] = useReducer(githubReducer, initialState)
+    
+      return (
+        <GithubContext.Provider
+          value={{
+            ...state,
+            dispatch,
+          }}
+        >
+          {children}
+        </GithubContext.Provider>
+      )
     }
-
-    const [state, dispatch] = useReducer(githubReducer, intialState)
-
-    // const [users, setUsers] = useState([])
-    // const [loading, setLoading] = useState(true)
-
-    const fetchUsers = async () => {
-        const response = await fetch(`${GITHUB_URL}/users`, {
-            headers: {
-                Authorization: `token ${GITHUB_TOKEN}`}
-            })
-            const data = await response.json()
-        dispatch({
-            type: 'GET_USERS',
-            payload: data
-        })
-    }
-
-    return <GithubContext.Provider value={{
-        users: state.users,
-        loading: state.loading,
-        fetchUsers
-    }}>
-        {children}
-    </GithubContext.Provider>
-}
 
 export default GithubContext;

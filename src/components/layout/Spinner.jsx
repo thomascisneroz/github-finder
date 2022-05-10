@@ -1,7 +1,7 @@
-import coolspinner from '../assests/coolspinner.gif';
+import coolspinner from './assests/coolspinner.gif'
 
 function Spinner () {
-    return 
+    return (
     <div className='w-100 mt-20'>
         <img 
         width={180}
@@ -10,6 +10,7 @@ function Spinner () {
         alt='Loading...'  
         />
     </div>
+    )
 }
 
 export default Spinner;
